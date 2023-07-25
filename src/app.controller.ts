@@ -1,4 +1,4 @@
-import { Controller, Get, Post, HttpCode, Param, Bind } from '@nestjs/common';
+import { Controller, Get, Post, HttpCode, Param, Bind, Inject } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ParamsTokenFactory } from '@nestjs/core/pipes';
 
@@ -8,13 +8,22 @@ import { ParamsTokenFactory } from '@nestjs/core/pipes';
 //可填写可选路由前缀
 @Controller('api')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  // constructor(private readonly appService: AppService) {}
+
+  @Inject('app-service')
+  private appService: AppService;
+
+  @Inject('person')
+  private p;
+
+  @Inject('xxx')
+  private xxx;
 
   //get请求
   //默认200状态码
   @Get('/get-test')
   findAll() {
-    return 'return result';
+    return 'return result' + JSON.stringify(this.xxx);
   }
 
 
